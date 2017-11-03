@@ -34,7 +34,6 @@ public class ArrayStorage {
                 break;
         }
     }
-
     /**
      * @return array, contains only Resumes in storage (without null)
      */
