@@ -2,7 +2,7 @@
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    Resume[] storage = new Resume[5];
+    Resume[] storage = new Resume[1000];
     int count = 0;
 
     void clear() {
@@ -20,7 +20,7 @@ public class ArrayStorage {
         else System.out.println("Количество резюме превышено");
     }
 
-    Resume get(String uuid) { // А через boolean не легче ?
+    Resume get(String uuid) {
         for (int i = 0; i < count ; i++) {
             if (uuid.equals(storage[i].uuid)) return storage[i];
         } // если находит нужное резюме то возвращает его
@@ -28,17 +28,26 @@ public class ArrayStorage {
     }
 
     void delete(String uuid) {
+        boolean isSdvig= false;
         for (int i = 0; i < count; i++) {
-            if (uuid.equals(storage[i].uuid))
+            if (uuid.equals(storage[i].uuid)) {
                 storage[i] = null;
-                break;
+                isSdvig = true;
+                count--;
+            }
+            if (isSdvig) storage[i]=storage[i+1];
         }
+
     }
     /**
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
-        return storage;
+        Resume[] newStorage = new Resume[count];
+        for (int i = 0; i < count; i++) {
+            newStorage[i] = storage[i];
+        }
+        return newStorage;
     }
 
     int size() {
