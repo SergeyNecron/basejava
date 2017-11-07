@@ -35,9 +35,8 @@ public class ArrayStorage {
         for (int i = 0; i < count; i++) {
             if (uuid.equals(storage[i].uuid)) {
                 count--;
-                Resume[] tempMass = Arrays.copyOfRange(storage, i + 1,  count+1);//to копирует до count включительно
-               // System.arraycopy(storage, i + 1, tempMass, 0, count - i);
-                System.arraycopy(tempMass,0, storage, i, count- i);//length количество копю элементов
+                Resume[] tempArr = Arrays.copyOfRange(storage, i + 1,  count+1);//to копирует до count включительно
+                System.arraycopy(tempArr,0, storage, i, count- i);//length количество копю элементов
                 storage[count]=null;
                 break;
             }
