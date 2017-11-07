@@ -1,3 +1,6 @@
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 /**
  * Array based storage for Resumes
  */
@@ -6,10 +9,11 @@ public class ArrayStorage {
     private int count = 0;
 
     void clear() {
-        for (int i = 0; i < storage.length; i++) {
+      /*  for (int i = 0; i < count; i++) {
             storage[i] = null;
-            count = 0;
-        }
+        }*/
+      Arrays.fill(storage,null);
+        count = 0;
     }
 
     void save(Resume r) {
@@ -31,10 +35,9 @@ public class ArrayStorage {
         for (int i = 0; i < count; i++) {
             if (uuid.equals(storage[i].uuid)) {
                 count--;
-                Resume[] tempMass = new Resume[count-i];
-                //System.arraycopy(storage, 0, tempMass, 0, storage.length);
-                System.arraycopy(storage, i + 1, tempMass, 0, count - i);
-                System.arraycopy(tempMass,0, storage, i, count- i);
+                Resume[] tempMass = Arrays.copyOfRange(storage, i + 1,  count+1);//to копирует до count включительно
+               // System.arraycopy(storage, i + 1, tempMass, 0, count - i);
+                System.arraycopy(tempMass,0, storage, i, count- i);//length количество копю элементов
                 storage[count]=null;
                 break;
             }
@@ -45,9 +48,7 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
-        Resume[] newStorage = new Resume[count];
-        System.arraycopy(storage, 0, newStorage, 0, count);
-        return newStorage;
+        return Arrays.copyOf(storage,count);
     }
 
     int size() {
