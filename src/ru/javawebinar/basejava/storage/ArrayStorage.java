@@ -6,11 +6,11 @@ import java.util.Arrays;
 /**
  * Array based storage for Resumes
  */
-public class ArrayStorage {
+public class ArrayStorage implements Storage {
    private Resume[] storage = new Resume[1000];
    private int size = 0;
 
-    private int index (String uuid){
+    private int getIndex (String uuid){
         for (int i = 0; i < size ; i++)
             if(uuid.equals(storage[i].getUuid()))
                 return i; //найдено
@@ -24,27 +24,27 @@ public class ArrayStorage {
 
     public void update(Resume r) {
         // TODO check if resume present
-        int i = index(r.getUuid());
-        if (i<0) System.out.println("ERROR : resume not present");
+        int i = getIndex(r.getUuid());
+        if (i<0) System.out.println("Resume " + r.getUuid() + " not exist");
         else storage[i]= r;
     }
 
   public void save(Resume r) {
         // TODO check if resume not present
-       if (index(r.getUuid()) <0) {
+       if (getIndex(r.getUuid()) <0) {
             if (size < storage.length) {
                 storage[size] = r;
                 size++;
-            } else System.out.println("ERROR : resume limit is exceeded");
+            } else System.out.println("Storage overflow");
         }
-        else System.out.println("ERROR : resume present ");
+        else System.out.println("Resume " + r.getUuid() + " already exist");
     }
 
    public Resume get(String uuid) {
         // TODO check if resume present
-        int i = index(uuid);
+        int i = getIndex(uuid);
         if (i<0) {
-            System.out.println("ERROR : resume not present");
+            System.out.println("Resume " + uuid + " not exist");
             return null;
             }
         else
@@ -53,8 +53,8 @@ public class ArrayStorage {
 
     public void delete(String uuid) {
         // TODO check if resume present
-        int i = index(uuid);
-        if (i<0) System.out.println("ERROR 3");
+        int i = getIndex(uuid);
+        if (i<0) System.out.println("Resume " + uuid + " not exist");
         else {
             size--;
             storage[i] = storage[size];
