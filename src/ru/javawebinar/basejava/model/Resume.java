@@ -38,6 +38,7 @@ public class Resume implements Comparable<Resume>{
 
     @Override
     public int compareTo(Resume o) {
-        return uuid.compareTo(o.uuid);
+        int i = uuid.compareTo(o.uuid);//для отладки
+        return i; //! Потом упростить !!!
     }
 }
