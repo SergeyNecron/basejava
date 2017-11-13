@@ -8,7 +8,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected void saveResume(Resume r, int i) {
-       // http://codereview.stackexchange.com/questions/36221/binary-search-for-inserting-in-array#answer-36239
+        // http://codereview.stackexchange.com/questions/36221/binary-search-for-inserting-in-array#answer-36239
         int insrtIndx = -i - 1;
         System.arraycopy(storage, insrtIndx, storage, insrtIndx + 1, size - insrtIndx + 1);
         storage[insrtIndx] = r;
