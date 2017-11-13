@@ -42,11 +42,11 @@ public class MainArray {
                     printAll();
                     break;
                 case "update":
-                  r = new Resume();
-                  r.setUuid(uuid);
-                  ARRAY_STORAGE.update(r);
-                  printAll();
-                  break;
+                    r = new Resume();
+                    r.setUuid(uuid);
+                    ARRAY_STORAGE.update(r);
+                    printAll();
+                    break;
                 case "delete":
                     ARRAY_STORAGE.delete(uuid);
                     printAll();
