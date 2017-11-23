@@ -13,7 +13,7 @@ import static org.junit.Assert.assertTrue;
 
 public abstract class AbstractArrayStorageTest {
     private Storage storage;
-    private Resume[] resums = {new Resume("uuid1"), new Resume("uuid2"), new Resume("uuid3"),};
+    private static Resume[] resums = {new Resume("uuid1"), new Resume("uuid2"), new Resume("uuid3")};
 
     protected AbstractArrayStorageTest(Storage storage) {
         this.storage = storage;
