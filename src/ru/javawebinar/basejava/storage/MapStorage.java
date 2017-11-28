@@ -19,37 +19,43 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
+    protected void save(Resume r, Object index) {
+        map.put((String) index, r);
+    }
+
+    @Override
+    protected void update(Resume r, Object index) {
+        save(r, index); // для map облавление равнозначно сохранению
+    }
+
+    @Override
+    protected void delete(Object index) {
+        map.remove(index);
+    }
+
+    @Override
+    protected Resume get(Object index) {
+        return map.get(index);
+    }
+
+    @Override
     public void clear() {
-
-    }
-
-    @Override
-    public void update(Resume r) {
-
-    }
-
-    @Override
-    public void save(Resume r) {
-
-    }
-
-    @Override
-    public Resume get(String uuid) {
-        return null;
-    }
-
-    @Override
-    public void delete(String uuid) {
-
+        map.clear();
     }
 
     @Override
     public Resume[] getAll() {
-        return new Resume[0];
+        Resume[] resumes = new Resume[map.size()];
+        int i= 0;
+        for (Map.Entry<String, Resume> pair : map.entrySet()) {
+            resumes[i]=pair.getValue();
+            i++;
+        }
+        return resumes;
     }
 
     @Override
     public int size() {
-        return 0;
+        return map.size();
     }
 }
