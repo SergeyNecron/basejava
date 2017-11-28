@@ -19,18 +19,11 @@ public abstract class AbstractStorage implements Storage {
     protected abstract Resume get(Object index);
 
     @Override
-    public int size() {
-        return 0;
-    }
-
-    @Override
     public void update(Resume r) {
         Object index = getIndex(r.getUuid());
         if (isExist(index)) update(r, index); // если резюме найден, то сохраняем
         else throw new NotExistStorageException(r.getUuid());
     }
-
-
 
     @Override
     public void save(Resume r) {
@@ -46,17 +39,10 @@ public abstract class AbstractStorage implements Storage {
         else throw new NotExistStorageException(uuid);
     }
 
-
-
     @Override
     public Resume get(String uuid) {
         Object index = getIndex(uuid);
         if (isExist(index)) return get(index); // если резюме найден, то возвращаем
         else throw new NotExistStorageException(uuid);
-
     }
-
-
-
-
 }

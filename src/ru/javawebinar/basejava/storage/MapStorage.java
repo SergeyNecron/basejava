@@ -46,7 +46,7 @@ public class MapStorage extends AbstractStorage {
     @Override
     public Resume[] getAll() {
         Resume[] resumes = new Resume[map.size()];
-        int i= 0;
+        int i = 0;
         for (Map.Entry<String, Resume> pair : map.entrySet()) {
             resumes[i]=pair.getValue();
             i++;
