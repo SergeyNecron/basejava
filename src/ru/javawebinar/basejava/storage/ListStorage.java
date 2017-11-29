@@ -49,12 +49,6 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume get(String uuid) {
-        return null;
-    }
-
-
-    @Override
     public Resume[] getAll() {
         return list.toArray(new Resume[list.size()]);
     }

@@ -6,7 +6,7 @@ import ru.javawebinar.basejava.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
-    protected abstract Object getIndex(String uuuid);
+    protected abstract Object getIndex(String uuid);
 
     protected abstract boolean isExist(Object index);
 
