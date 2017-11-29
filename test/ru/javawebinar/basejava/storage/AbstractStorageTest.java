@@ -40,7 +40,7 @@ public abstract class AbstractStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void updateNotExist() throws Exception {
-        storage.get("uuid3");
+        storage.get("uuid5");
     }
 
     @Test
