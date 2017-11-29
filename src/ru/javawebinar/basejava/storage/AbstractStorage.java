@@ -6,7 +6,7 @@ import ru.javawebinar.basejava.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
-    protected abstract Object getIndex(String uuid);
+    protected abstract Object getIndex(String uuuid);
 
     protected abstract boolean isExist(Object index);
 
@@ -28,14 +28,16 @@ public abstract class AbstractStorage implements Storage {
     @Override
     public void save(Resume r) {
         Object index = getIndex(r.getUuid());
-        if (!isExist(index)) save(r, index); // если резюме не найден, то сохраняем
+        if (!isExist(index))
+            save(r, index); // если резюме не найден, то сохраняем
         else throw new ExistStorageException(r.getUuid());
     }
 
     @Override
     public void delete(String uuid) {
         Object index = getIndex(uuid);
-        if (isExist(index)) delete(index); // если резюме найден, то удаляем
+        if (isExist(index))
+            delete(index); // если резюме найден, то удаляем
         else throw new NotExistStorageException(uuid);
     }
 

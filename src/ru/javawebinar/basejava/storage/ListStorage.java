@@ -5,16 +5,22 @@ import ru.javawebinar.basejava.model.Resume;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListStorage extends AbstractStorage{
+public class ListStorage extends AbstractStorage {
     private List<Resume> list = new ArrayList<>();
+
     @Override
     protected Integer getIndex(String uuid) {
-        return list.indexOf(uuid);
+        for (int i = 0; i < list.size(); i++) {
+            if (uuid.equals(list.get(i).getUuid())) {
+                return i;
+            }
+        }
+        return null;
     }
 
     @Override
     protected boolean isExist(Object index) {
-        return list.contains(index);
+        return index != null;
     }
 
     @Override
@@ -34,12 +40,17 @@ public class ListStorage extends AbstractStorage{
 
     @Override
     protected Resume get(Object index) {
-        return  list.get((Integer) index);
+        return list.get((Integer) index);
     }
 
     @Override
     public void clear() {
         list.clear();
+    }
+
+    @Override
+    public Resume get(String uuid) {
+        return null;
     }
 
 

@@ -32,12 +32,6 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void clear() throws Exception {
-        storage.clear();
-        assertEquals(0, storage.size());
-    }
-
-    @Test
     public void update() throws Exception {
         Resume newResume = new Resume("uuid1");
         storage.update(newResume);
@@ -105,5 +99,11 @@ public abstract class AbstractStorageTest {
     @Test(expected = NotExistStorageException.class)
     public void getNotExist() throws Exception {
         storage.get("uuid5");
+    }
+
+    @Test
+    public void clear() throws Exception {
+        storage.clear();
+        assertEquals(0, storage.size());
     }
 }
