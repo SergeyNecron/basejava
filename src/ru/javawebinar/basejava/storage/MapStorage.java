@@ -40,7 +40,7 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     public void clear() {
-        map.clear();
+        map.clear();size = 0;
     }
 
     @Override

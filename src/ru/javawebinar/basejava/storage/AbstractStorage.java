@@ -2,7 +2,10 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
+import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
+
+import static ru.javawebinar.basejava.storage.AbstractArrayStorage.STORAGE_LIMIT;
 
 public abstract class AbstractStorage implements Storage {
 
@@ -18,6 +21,8 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract Resume get(Object index);
 
+    protected int size = 0;
+
     @Override
     public void update(Resume r) {
         Object index = getIndex(r.getUuid());
@@ -27,10 +32,15 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void save(Resume r) {
-        Object index = getIndex(r.getUuid());
-        if (!isExist(index))
-            save(r, index); // если резюме не найден, то сохраняем
-        else throw new ExistStorageException(r.getUuid());
+        if (size == STORAGE_LIMIT)
+            throw new StorageException("Storage overflow", r.getUuid());
+        else {
+            Object index = getIndex(r.getUuid());
+            if (!isExist(index))
+                save(r, index); // если резюме не найден, то сохраняем
+            else throw new ExistStorageException(r.getUuid());
+            size++;
+        }
     }
 
     @Override
@@ -39,6 +49,7 @@ public abstract class AbstractStorage implements Storage {
         if (isExist(index))
             delete(index); // если резюме найден, то удаляем
         else throw new NotExistStorageException(uuid);
+        size--;
     }
 
     @Override
