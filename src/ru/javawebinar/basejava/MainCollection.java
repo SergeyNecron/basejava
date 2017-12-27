@@ -50,5 +50,9 @@ public class MainCollection {
         for (Map.Entry<String, Resume> entry : map.entrySet()) {
             System.out.println(entry.getValue());
         }
+
+        List<Resume> resumes = Arrays.asList(resums[0], resums[1], resums[2]);
+        resumes.remove(1);
+        System.out.println(resumes);
     }
 }
