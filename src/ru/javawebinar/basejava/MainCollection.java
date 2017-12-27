@@ -16,7 +16,7 @@ public class MainCollection {
         Collection<Resume> collection = new ArrayList<>();
 
         //добавление всех резюме в коллекцию
-            Collections.addAll(collection, resums);
+        Collections.addAll(collection, resums);
 
         //вывод колллекции
         System.out.println(collection.toString());
