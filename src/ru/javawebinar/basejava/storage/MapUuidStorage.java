@@ -2,7 +2,9 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.model.Resume;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 // TODO implement
@@ -41,12 +43,11 @@ public class MapUuidStorage extends AbstractStorage {
 
     @Override
     public void clear() {
-
     }
 
     @Override
-    public Resume[] getAll() {
-        return new Resume[0];
+    protected List<Resume> doGetAll() {
+        return new ArrayList<>(map.values());
     }
 
     @Override
