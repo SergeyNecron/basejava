@@ -7,9 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// TODO implement
-// TODO create new MapStorage with search key not uuid
-public class MapUuidStorage extends AbstractStorage {
+public class MapStorage extends AbstractStorage {
     private Map<String, Resume> map = new HashMap<>();
 
     @Override
@@ -19,30 +17,32 @@ public class MapUuidStorage extends AbstractStorage {
 
     @Override
     protected void doUpdate(Resume r, Object searchKey) {
+        doSave(r, searchKey);
     }
 
     @Override
     protected boolean isExist(Object searchKey) {
-        return false;
+        return map.containsKey(searchKey);
     }
 
     @Override
     protected void doSave(Resume r, Object searchKey) {
-
+        map.put((String) searchKey, r);
     }
 
     @Override
     protected Resume doGet(Object searchKey) {
-        return null;
+        return map.get(searchKey);
     }
 
     @Override
     protected void doDelete(Object searchKey) {
-
+        map.remove(searchKey);
     }
 
     @Override
     public void clear() {
+        map.clear();
     }
 
     @Override
@@ -52,6 +52,6 @@ public class MapUuidStorage extends AbstractStorage {
 
     @Override
     public int size() {
-        return 0;
+        return map.size();
     }
 }
