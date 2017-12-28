@@ -1,4 +1,5 @@
 package ru.javawebinar.basejava.storage;
+
 import org.junit.Before;
 import org.junit.Test;
 import ru.javawebinar.basejava.exception.ExistStorageException;
@@ -70,8 +71,8 @@ public abstract class AbstractStorageTest {
         List list = storage.getAllSorted();
         assertEquals(3, list.size());
         assertEquals(RESUME_1, list.get(0));
-        assertEquals(RESUME_1, list.get(1));
-        assertEquals(RESUME_1, list.get(2));
+        assertEquals(RESUME_2, list.get(1));
+        assertEquals(RESUME_3, list.get(2));
     }
 
     @Test
