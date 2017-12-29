@@ -49,7 +49,7 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     public List<Resume> doGetAll() {
-        return list;
+        return new ArrayList<>(list);
     }
 
     @Override
