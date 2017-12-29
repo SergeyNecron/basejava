@@ -7,23 +7,22 @@ import java.util.UUID;
  */
 public class Resume {
 
-    // Unique identifier
     private final String uuid;
     private final String fullName;
 
-    public Resume() {
-        this(UUID.randomUUID().toString());
+    public String getFullName() {
+        return fullName;
     }
 
-    public Resume(String uuid) {
-        this.uuid = uuid;
-        fullName = "";
+    public Resume(String fullName) {
+        this(UUID.randomUUID().toString(),fullName);
     }
 
     public Resume(String uuid, String fullName) {
         this.uuid = uuid;
         this.fullName = fullName;
     }
+
 
     public String getUuid() {
         return uuid;
@@ -46,7 +45,9 @@ public class Resume {
 
     @Override
     public String toString() {
-        return uuid;
+        return "Resume{" +
+                "uuid='" + uuid + '\'' +
+                ", fullName='" + fullName + '\'' +
+                '}';
     }
-
 }

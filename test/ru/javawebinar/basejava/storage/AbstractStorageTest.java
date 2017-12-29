@@ -18,6 +18,10 @@ public abstract class AbstractStorageTest {
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
+    private static final String name_1 = "Vasa";
+    private static final String name_2 = "Teti";
+    private static final String name_3 = "Vova";
+    private static final String name_4 = "Ira";
 
     private static final Resume RESUME_1;
     private static final Resume RESUME_2;
@@ -25,10 +29,10 @@ public abstract class AbstractStorageTest {
     private static final Resume RESUME_4;
 
     static {
-        RESUME_1 = new Resume(UUID_1);
-        RESUME_2 = new Resume(UUID_2);
-        RESUME_3 = new Resume(UUID_3);
-        RESUME_4 = new Resume(UUID_4);
+        RESUME_1 = new Resume(UUID_1,name_1);
+        RESUME_2 = new Resume(UUID_2,name_2);
+        RESUME_3 = new Resume(UUID_3,name_3);
+        RESUME_4 = new Resume(UUID_4,name_4);
     }
 
     AbstractStorageTest(Storage storage) {
@@ -56,7 +60,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() throws Exception {
-        Resume newResume = new Resume(UUID_1);
+        Resume newResume = new Resume(UUID_1, "Ana");
         storage.update(newResume);
         assertTrue(newResume == storage.get(UUID_1));
     }
