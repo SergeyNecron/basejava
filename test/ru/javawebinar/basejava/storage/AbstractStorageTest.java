@@ -32,7 +32,7 @@ public abstract class AbstractStorageTest {
         RESUME_4 = new Resume(UUID_4, name_4);
     }
 
-    protected Storage storage;
+    Storage storage;
 
     AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -59,7 +59,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() throws Exception {
-        Resume newResume = new Resume(UUID_1, "Ana");
+        Resume newResume = new Resume(UUID_1, "New Name");
         storage.update(newResume);
         assertTrue(newResume == storage.get(UUID_1));
     }
