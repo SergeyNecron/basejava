@@ -30,10 +30,10 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public List<Resume> doGetAll() {
-        List<Resume> list = Arrays.asList(Arrays.copyOfRange(storage,0,size));
-        return list;
+    public List<Resume> doCopyAll() {
+        return Arrays.asList(Arrays.copyOfRange(storage, 0, size));
     }
+
 
     @Override
     public void doSave(Resume r, Object index) {
