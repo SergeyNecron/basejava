@@ -1,23 +1,23 @@
 package ru.javawebinar.basejava.model;
 
 import java.util.List;
+import java.util.Objects;
 
-public class OrganizationSections extends Sections<List<Organization>> {
-    private final List<Organization> list;
+public class OrganizationSections extends Sections {
+    private final List<Organization> organizations;
 
-    public OrganizationSections(List<Organization> list) {
-        this.list = list;
+    public OrganizationSections(List<Organization> organizations) {
+        Objects.requireNonNull(organizations, "organizations must not be null");
+        this.organizations = organizations;
     }
 
-
-    @Override
-    protected List<Organization> getContent() {
-        return list;
+    protected List<Organization> getOrganizations() {
+        return organizations;
     }
 
     @Override
     public String toString() {
-        return list.toString();
+        return organizations.toString();
     }
 
     @Override
@@ -27,11 +27,11 @@ public class OrganizationSections extends Sections<List<Organization>> {
 
         OrganizationSections that = (OrganizationSections) o;
 
-        return list != null ? list.equals(that.list) : that.list == null;
+        return organizations.equals(that.organizations);
     }
 
     @Override
     public int hashCode() {
-        return list != null ? list.hashCode() : 0;
+        return organizations.hashCode();
     }
 }

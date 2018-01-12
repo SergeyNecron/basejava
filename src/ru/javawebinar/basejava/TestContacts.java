@@ -1,11 +1,11 @@
 package ru.javawebinar.basejava;
 
-import ru.javawebinar.basejava.model.Contacts;
+import ru.javawebinar.basejava.model.ContactType;
 
 public class TestContacts {
     public static void main(String[] args) {
 
-        for (Contacts type : Contacts.values()) {
+        for (ContactType type : ContactType.values()) {
             System.out.println(type.getTitle());
         }
     }

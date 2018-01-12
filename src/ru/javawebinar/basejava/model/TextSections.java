@@ -1,23 +1,18 @@
 package ru.javawebinar.basejava.model;
 
-import java.util.List;
+import java.util.Objects;
 
-public class TextSections extends Sections<List<String>> {
-    private final List<String> list;
+public class TextSections extends Sections {
+    private final String content;
 
-    public TextSections(List<String> list) {
-        this.list = list;
+    public TextSections(String content) {
+        Objects.requireNonNull(content, "content must not be null");
+        this.content = content;
     }
 
 
-    @Override
-    protected List<String> getContent() {
-        return list;
-    }
-
-    @Override
-    public String toString() {
-        return list.toString();
+    public String getContent() {
+        return content;
     }
 
     @Override
@@ -25,13 +20,19 @@ public class TextSections extends Sections<List<String>> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TextSections textSections = (TextSections) o;
+        TextSections that = (TextSections) o;
 
-        return list != null ? list.equals(textSections.list) : textSections.list == null;
+        return content.equals(that.content);
     }
 
     @Override
     public int hashCode() {
-        return list != null ? list.hashCode() : 0;
+        return content.hashCode();
+    }
+
+
+    @Override
+    public String toString() {
+        return content;
     }
 }
