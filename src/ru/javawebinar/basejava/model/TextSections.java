@@ -2,16 +2,16 @@ package ru.javawebinar.basejava.model;
 
 import java.util.List;
 
-public class ListType extends Sections<List<String>> {
+public class TextSections extends Sections<List<String>> {
     private final List<String> list;
 
-    public ListType(List<String> list) {
+    public TextSections(List<String> list) {
         this.list = list;
     }
 
 
     @Override
-    protected List<String> getType() {
+    protected List<String> getContent() {
         return list;
     }
 
@@ -25,9 +25,9 @@ public class ListType extends Sections<List<String>> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ListType listType = (ListType) o;
+        TextSections textSections = (TextSections) o;
 
-        return list != null ? list.equals(listType.list) : listType.list == null;
+        return list != null ? list.equals(textSections.list) : textSections.list == null;
     }
 
     @Override

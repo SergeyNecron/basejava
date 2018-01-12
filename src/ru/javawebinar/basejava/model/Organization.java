@@ -2,7 +2,7 @@ package ru.javawebinar.basejava.model;
 
 import java.time.LocalDate;
 
-public class Firms {
+public class Organization {
     private final String title;
     private final String description;
     private final String web;
@@ -10,7 +10,7 @@ public class Firms {
     private final LocalDate endDate;
 
 
-    public Firms(String title, String description, String web, LocalDate startDate, LocalDate endDate) {
+    public Organization(String title, String description, String web, LocalDate startDate, LocalDate endDate) {
         this.title = title;
         this.description = description;
         this.web = web;
@@ -24,13 +24,13 @@ public class Firms {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Firms firms = (Firms) o;
+        Organization that = (Organization) o;
 
-        if (title != null ? !title.equals(firms.title) : firms.title != null) return false;
-        if (description != null ? !description.equals(firms.description) : firms.description != null) return false;
-        if (web != null ? !web.equals(firms.web) : firms.web != null) return false;
-        if (startDate != null ? !startDate.equals(firms.startDate) : firms.startDate != null) return false;
-        return endDate != null ? endDate.equals(firms.endDate) : firms.endDate == null;
+        if (title != null ? !title.equals(that.title) : that.title != null) return false;
+        if (description != null ? !description.equals(that.description) : that.description != null) return false;
+        if (web != null ? !web.equals(that.web) : that.web != null) return false;
+        if (startDate != null ? !startDate.equals(that.startDate) : that.startDate != null) return false;
+        return endDate != null ? endDate.equals(that.endDate) : that.endDate == null;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class Firms {
 
     @Override
     public String toString() {
-        return "Firms{" +
+        return "Organization{" +
                 "title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", web='" + web + '\'' +

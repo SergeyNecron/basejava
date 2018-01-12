@@ -2,16 +2,16 @@ package ru.javawebinar.basejava.model;
 
 import java.util.List;
 
-public class CaseType extends Sections<List<Firms>> {
-    private final List<Firms> list;
+public class OrganizationSections extends Sections<List<Organization>> {
+    private final List<Organization> list;
 
-    public CaseType(List<Firms> list) {
+    public OrganizationSections(List<Organization> list) {
         this.list = list;
     }
 
 
     @Override
-    protected List<Firms> getType() {
+    protected List<Organization> getContent() {
         return list;
     }
 
@@ -25,9 +25,9 @@ public class CaseType extends Sections<List<Firms>> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CaseType caseType = (CaseType) o;
+        OrganizationSections that = (OrganizationSections) o;
 
-        return list != null ? list.equals(caseType.list) : caseType.list == null;
+        return list != null ? list.equals(that.list) : that.list == null;
     }
 
     @Override

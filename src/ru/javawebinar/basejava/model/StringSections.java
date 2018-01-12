@@ -1,14 +1,14 @@
 package ru.javawebinar.basejava.model;
 
-public class StringType extends Sections<String> {
+public class StringSections extends Sections<String> {
     private final String s;
 
-    public StringType(String s) {
+    public StringSections(String s) {
         this.s = s;
     }
 
     @Override
-    public String getType() {
+    public String getContent() {
         return s;
     }
 
@@ -17,7 +17,7 @@ public class StringType extends Sections<String> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        StringType that = (StringType) o;
+        StringSections that = (StringSections) o;
 
         return s != null ? s.equals(that.s) : that.s == null;
     }

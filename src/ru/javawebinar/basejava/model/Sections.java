@@ -1,7 +1,7 @@
 package ru.javawebinar.basejava.model;
 
-public abstract class Sections<TP> {
-    protected abstract TP getType();
+public abstract class Sections<T> {
+    protected abstract T getContent();
 
     public abstract String toString();
 
