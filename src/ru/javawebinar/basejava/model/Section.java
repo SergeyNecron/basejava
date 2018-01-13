@@ -1,6 +1,6 @@
 package ru.javawebinar.basejava.model;
 
-public abstract class Sections {
+public abstract class Section {
 
     public abstract String toString();
 
