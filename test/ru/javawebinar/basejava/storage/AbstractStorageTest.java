@@ -4,8 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
-import ru.javawebinar.basejava.model.Resume;
+import ru.javawebinar.basejava.model.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,11 +24,49 @@ public abstract class AbstractStorageTest {
     private static final Resume RESUME_3;
     private static final Resume RESUME_4;
 
+    private static List ACHIEVEMENT = new ArrayList<String>();
+    private static List QUALIFICATIONS = new ArrayList<String>();
+    private static List EXPERIENCE = new ArrayList<Organization>();
+    private static List EDUCATION = new ArrayList<Organization>();
+
     static {
         RESUME_1 = new Resume(UUID_1, "Name1");
         RESUME_2 = new Resume(UUID_2, "Name2");
         RESUME_3 = new Resume(UUID_3, "Name3");
         RESUME_4 = new Resume(UUID_4, "Name4");
+
+        ACHIEVEMENT.add("С 2013 года: разработка проектов \"Практика Java, разработка Web приложения\",\"Java Enterprise\", \"Многомодульный maven." +
+                " Многопоточность. XML (JAXB/StAX). Веб сервисы (JAX-RS/SOAP). Удаленное взаимодействие (JMS/AKKA)\" и проведение по ним стажировок" +
+                " и корпоративных обучений. Более 1000 выпускников.");
+        ACHIEVEMENT.add("Реализация двухфакторной аутентификации для онлайн платформы управления проектами Wrike. " +
+                "Интеграция с Twilio, DuoSecurity, Google Authenticator, Jira, Zendesk.");
+        ACHIEVEMENT.add("Налаживание процесса разработки и непрерывной интеграции ERP системы River BPM. " +
+                "Интеграция с 1С, Bonita BPM, CMIS, LDAP. Разработка приложения управления окружением на стеке: " +
+                "Scala/Play/Anorm/JQuery. Разработка SSO аутентификации и авторизации различных ERP модулей, интеграция CIFS/SMB java сервера.");
+
+        QUALIFICATIONS.add("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2");
+        QUALIFICATIONS.add("Version control: Subversion, Git, Mercury, ClearCase, Perforce");
+        QUALIFICATIONS.add("DB: PostgreSQL(наследование, pgplsql, PL/Python), Redis (Jedis), H2, Oracle, MySQL, SQLite, MS SQL, HSQLDB");
+
+
+        RESUME_1.addContact(ContactType.PHONE, "88005353535");
+        RESUME_1.addContact(ContactType.MOBILE, "84285653535");
+        RESUME_1.addContact(ContactType.HOME_PHONE, "891735532428");
+        RESUME_1.addContact(ContactType.SKYPE, "vasa.ivanov");
+        RESUME_1.addContact(ContactType.EMAIL, "vasa@mail.ru");
+        RESUME_1.addContact(ContactType.LINKEDIN, "профиль LINKEDIN");
+        RESUME_1.addContact(ContactType.GITHUB, "профиль GITHUB");
+        RESUME_1.addContact(ContactType.STATCKOVERFLOW, "профиль StackOverflow");
+        RESUME_1.addContact(ContactType.HABRAHABR, "профиль Habrahabr");
+        RESUME_1.addContact(ContactType.HOME_PHONE, "vasa.ivanov.ru");
+
+        RESUME_1.addSection(SectionType.PERSONAL, new TextSection("Personal data"));
+        RESUME_1.addSection(SectionType.OBJECTIVE, new TextSection("Objective1"));
+
+        RESUME_1.addSection(SectionType.ACHIEVEMENT, new ListSection(ACHIEVEMENT));
+        RESUME_1.addSection(SectionType.QUALIFICATIONS, new ListSection(QUALIFICATIONS));
+
+
     }
 
     Storage storage;
