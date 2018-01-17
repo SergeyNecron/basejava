@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static java.time.Month.OCTOBER;
+import static java.time.Month.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -31,6 +31,12 @@ public abstract class AbstractStorageTest {
     private static List QUALIFICATIONS = new ArrayList<String>();
     private static List EXPERIENCE = new ArrayList<Organization>();
     private static List EDUCATION = new ArrayList<Organization>();
+
+    //********************dateOrganizations***************
+    private static List dateJavaOnlineProjects = new ArrayList<Organization>();
+    private static List dateAlcatelJob = new ArrayList<Organization>();
+    private static List dateAlcatelScience = new ArrayList<Organization>();
+    //  private static List dateJavaOnlineProjects = new ArrayList<Organization>();
 
     static {
         RESUME_1 = new Resume(UUID_1, "Name1");
@@ -51,12 +57,21 @@ public abstract class AbstractStorageTest {
         QUALIFICATIONS.add("Version control: Subversion, Git, Mercury, ClearCase, Perforce");
         QUALIFICATIONS.add("DB: PostgreSQL(наследование, pgplsql, PL/Python), Redis (Jedis), H2, Oracle, MySQL, SQLite, MS SQL, HSQLDB");
 
-        EXPERIENCE.add(new Organization("Java Online Projects", "http://javaops.ru/", DateUtil.of(13, OCTOBER), LocalDate.now(), "Практика:" +
+        dateJavaOnlineProjects.add(new DateOrganization(DateUtil.of(13, OCTOBER), LocalDate.now(), "Практика:" +
                 " Разработка Web приложения \"База данных резюме\"", "Объектная модель, коллекции, система ввода-вывода, работа с файлами," +
                 " сериализация, работа с XML, JSON, SQL, персистентность в базу данных (PostgreSQL), сервлеты, JSP/JSTL, веб-контейнер Tomcat, HTML, " +
                 "модульные тесты JUnit, java.util.Logging, система контроля версий Git."));
-        EDUCATION.add(new Organization("Coursera", "https://www.coursera.org/", DateUtil.of(13), LocalDate.now(), "\t" +
-                "Курс \"Functional Programming Principles in Scala\" by Martin Odersky\n Сертификат с отличием (100.0%).", ""));
+        dateJavaOnlineProjects.add(new DateOrganization(DateUtil.of(13, OCTOBER), LocalDate.now(), "Стажировка Java Enterprise",
+                "Разработка полнофункционального Spring/JPA Enterprise приложения c авторизацией и правами доступа на основе ролей с " +
+                        "использованием наиболее популярных инструментов и технологий Java: Maven, Spring MVC, Security, JPA(Hibernate), REST(Jackson)," +
+                        " Bootstrap (css,js), datatables, jQuery + plugins, Java 8 Stream and Time API."));
+
+        dateAlcatelJob.add(new DateOrganization(DateUtil.of(1997, SEPTEMBER), DateUtil.of(2005, JANUARY),
+                "\tИнженер по аппаратному и программному тестированию", "" +
+                "Тестирование, отладка, внедрение ПО цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM)."));
+
+        dateAlcatelScience.add(new DateOrganization(DateUtil.of(1997), DateUtil.of(1998),
+                "6 месяцев обучения цифровым телефонным сетям (Москва)", ""));
 
         RESUME_1.addContact(ContactType.PHONE, "88005353535");
         RESUME_2.addContact(ContactType.MOBILE, "84285653535");
@@ -77,7 +92,10 @@ public abstract class AbstractStorageTest {
         RESUME_2.addSection(SectionType.EXPERIENCE, new OrganizationSection(EXPERIENCE));
         RESUME_3.addSection(SectionType.EDUCATION, new OrganizationSection(EDUCATION));
 
+        EXPERIENCE.add(new Organization("Java Online Projects", "http://javaops.ru/", dateJavaOnlineProjects));
+        EXPERIENCE.add(new Organization("Alcatel", "http://www.alcatel.ru/", dateAlcatelJob));
 
+        EDUCATION.add(new Organization("Alcatel", "http://www.alcatel.ru/", dateAlcatelScience));
     }
 
     Storage storage;
