@@ -5,11 +5,14 @@ import org.junit.Test;
 import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.*;
+import ru.javawebinar.basejava.util.DateUtil;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static java.time.Month.OCTOBER;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -48,23 +51,31 @@ public abstract class AbstractStorageTest {
         QUALIFICATIONS.add("Version control: Subversion, Git, Mercury, ClearCase, Perforce");
         QUALIFICATIONS.add("DB: PostgreSQL(наследование, pgplsql, PL/Python), Redis (Jedis), H2, Oracle, MySQL, SQLite, MS SQL, HSQLDB");
 
+        EXPERIENCE.add(new Organization("Java Online Projects", "http://javaops.ru/", DateUtil.of(13, OCTOBER), LocalDate.now(), "Практика:" +
+                " Разработка Web приложения \"База данных резюме\"", "Объектная модель, коллекции, система ввода-вывода, работа с файлами," +
+                " сериализация, работа с XML, JSON, SQL, персистентность в базу данных (PostgreSQL), сервлеты, JSP/JSTL, веб-контейнер Tomcat, HTML, " +
+                "модульные тесты JUnit, java.util.Logging, система контроля версий Git."));
+        EDUCATION.add(new Organization("Coursera", "https://www.coursera.org/", DateUtil.of(13), LocalDate.now(), "\t" +
+                "Курс \"Functional Programming Principles in Scala\" by Martin Odersky\n Сертификат с отличием (100.0%).", ""));
 
         RESUME_1.addContact(ContactType.PHONE, "88005353535");
-        RESUME_1.addContact(ContactType.MOBILE, "84285653535");
-        RESUME_1.addContact(ContactType.HOME_PHONE, "891735532428");
-        RESUME_1.addContact(ContactType.SKYPE, "vasa.ivanov");
-        RESUME_1.addContact(ContactType.EMAIL, "vasa@mail.ru");
-        RESUME_1.addContact(ContactType.LINKEDIN, "профиль LINKEDIN");
+        RESUME_2.addContact(ContactType.MOBILE, "84285653535");
+        RESUME_2.addContact(ContactType.HOME_PHONE, "891735532428");
+        RESUME_4.addContact(ContactType.SKYPE, "vasa.ivanov");
+        RESUME_3.addContact(ContactType.EMAIL, "vasa@mail.ru");
+        RESUME_2.addContact(ContactType.LINKEDIN, "профиль LINKEDIN");
         RESUME_1.addContact(ContactType.GITHUB, "профиль GITHUB");
-        RESUME_1.addContact(ContactType.STATCKOVERFLOW, "профиль StackOverflow");
-        RESUME_1.addContact(ContactType.HABRAHABR, "профиль Habrahabr");
+        RESUME_3.addContact(ContactType.STATCKOVERFLOW, "профиль StackOverflow");
+        RESUME_4.addContact(ContactType.HABRAHABR, "профиль Habrahabr");
         RESUME_1.addContact(ContactType.HOME_PHONE, "vasa.ivanov.ru");
 
-        RESUME_1.addSection(SectionType.PERSONAL, new TextSection("Personal data"));
-        RESUME_1.addSection(SectionType.OBJECTIVE, new TextSection("Objective1"));
+        RESUME_2.addSection(SectionType.PERSONAL, new TextSection("Personal data"));
+        RESUME_3.addSection(SectionType.OBJECTIVE, new TextSection("Objective1"));
 
         RESUME_1.addSection(SectionType.ACHIEVEMENT, new ListSection(ACHIEVEMENT));
-        RESUME_1.addSection(SectionType.QUALIFICATIONS, new ListSection(QUALIFICATIONS));
+        RESUME_4.addSection(SectionType.QUALIFICATIONS, new ListSection(QUALIFICATIONS));
+        RESUME_2.addSection(SectionType.EXPERIENCE, new OrganizationSection(EXPERIENCE));
+        RESUME_3.addSection(SectionType.EDUCATION, new OrganizationSection(EDUCATION));
 
 
     }
