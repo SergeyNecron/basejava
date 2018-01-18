@@ -6,11 +6,12 @@ import java.util.List;
 public class Organization {
 
     private final Link homePage;
-    private final List<DateOrganization> dateOrganization = new ArrayList<>();
+    private List<DateOrganization> dateOrganization = new ArrayList<>();
 
 
     public Organization(String name, String url, List dateOrganization) {
         this.homePage = new Link(name, url);
+        this.dateOrganization = dateOrganization;
     }
 
     @Override
