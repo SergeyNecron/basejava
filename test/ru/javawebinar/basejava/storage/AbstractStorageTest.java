@@ -5,8 +5,8 @@ import org.junit.Test;
 import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.*;
-import ru.javawebinar.basejava.util.DateUtil;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,37 +15,38 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public abstract class AbstractStorageTest {
+    protected static final File STORAGE_DIR = new File("/home/op/java/basejava-9/storage");
+    private static final Resume R1;
+
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
-
-    private static final Resume RESUME_1;
-    private static final Resume RESUME_2;
-    private static final Resume RESUME_3;
-    private static final Resume RESUME_4;
+    private static final Resume R2;
+    private static final Resume R3;
+    private static final Resume R4;
 
     static {
-        RESUME_1 = new Resume(UUID_1, "Name1");
-        RESUME_2 = new Resume(UUID_2, "Name2");
-        RESUME_3 = new Resume(UUID_3, "Name3");
-        RESUME_4 = new Resume(UUID_4, "Name4");
+        R1 = new Resume(UUID_1, "Name1");
+        R2 = new Resume(UUID_2, "Name2");
+        R3 = new Resume(UUID_3, "Name3");
+        R4 = new Resume(UUID_4, "Name4");
 
-        RESUME_1.addContact(ContactType.PHONE, "88005353535");
-        RESUME_2.addContact(ContactType.MOBILE, "84285653535");
-        RESUME_2.addContact(ContactType.HOME_PHONE, "891735532428");
-        RESUME_4.addContact(ContactType.SKYPE, "vasa.ivanov");
-        RESUME_3.addContact(ContactType.EMAIL, "vasa@mail.ru");
-        RESUME_2.addContact(ContactType.LINKEDIN, "профиль LINKEDIN");
-        RESUME_1.addContact(ContactType.GITHUB, "профиль GITHUB");
-        RESUME_3.addContact(ContactType.STATCKOVERFLOW, "профиль StackOverflow");
-        RESUME_4.addContact(ContactType.HABRAHABR, "профиль Habrahabr");
-        RESUME_1.addContact(ContactType.HOME_PHONE, "vasa.ivanov.ru");
+        R1.addContact(ContactType.PHONE, "88005353535");
+        R2.addContact(ContactType.MOBILE, "84285653535");
+        R2.addContact(ContactType.HOME_PHONE, "891735532428");
+        R4.addContact(ContactType.SKYPE, "vasa.ivanov");
+        R3.addContact(ContactType.EMAIL, "vasa@mail.ru");
+        R2.addContact(ContactType.LINKEDIN, "профиль LINKEDIN");
+        R1.addContact(ContactType.GITHUB, "профиль GITHUB");
+        R3.addContact(ContactType.STATCKOVERFLOW, "профиль StackOverflow");
+        R4.addContact(ContactType.HABRAHABR, "профиль Habrahabr");
+        R1.addContact(ContactType.HOME_PHONE, "vasa.ivanov.ru");
 
-        RESUME_2.addSection(SectionType.PERSONAL, new TextSection("Personal data"));
-        RESUME_3.addSection(SectionType.OBJECTIVE, new TextSection("Objective1"));
+        R2.addSection(SectionType.PERSONAL, new TextSection("Personal data"));
+        R3.addSection(SectionType.OBJECTIVE, new TextSection("Objective1"));
 
-        RESUME_1.addSection(SectionType.ACHIEVEMENT, new ListSection(
+        R1.addSection(SectionType.ACHIEVEMENT, new ListSection(
                 "С 2013 года: разработка проектов \"Практика Java, разработка Web приложения\",\"Java Enterprise\", \"Многомодульный maven." +
                         " Многопоточность. XML (JAXB/StAX). Веб сервисы (JAX-RS/SOAP). Удаленное взаимодействие (JMS/AKKA)\" и проведение по ним стажировок" +
                         " и корпоративных обучений. Более 1000 выпускников.",
@@ -55,13 +56,13 @@ public abstract class AbstractStorageTest {
                         "Интеграция с 1С, Bonita BPM, CMIS, LDAP. Разработка приложения управления окружением на стеке: " +
                         "Scala/Play/Anorm/JQuery. Разработка SSO аутентификации и авторизации различных ERP модулей, интеграция CIFS/SMB java сервера."));
 
-        RESUME_4.addSection(SectionType.QUALIFICATIONS, new ListSection(
+        R4.addSection(SectionType.QUALIFICATIONS, new ListSection(
                 "JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2",
                 "Version control: Subversion, Git, Mercury, ClearCase, Perforce",
                 "DB: PostgreSQL(наследование, pgplsql, PL/Python), Redis (Jedis), H2, Oracle, MySQL, SQLite, MS SQL, HSQLDB"
         ));
 
-        RESUME_2.addSection(SectionType.EXPERIENCE, new OrganizationSection(
+        R2.addSection(SectionType.EXPERIENCE, new OrganizationSection(
                 new Organization("Java Online Projects", "http://javaops.ru/",
                         new Organization.Position(13, OCTOBER, "Практика:" +
                                 " Разработка Web приложения \"База данных резюме\"", "Объектная модель, коллекции, система ввода-вывода, работа с файлами," +
@@ -73,28 +74,28 @@ public abstract class AbstractStorageTest {
                                         " Bootstrap (css,js), datatables, jQuery + plugins, Java 8 Stream and Time API."))));
 
 
-        RESUME_3.addSection(SectionType.EDUCATION, new OrganizationSection(
+        R3.addSection(SectionType.EDUCATION, new OrganizationSection(
                 new Organization("Alcatel", "http://www.alcatel.ru/",
                         new Organization.Position(1997, SEPTEMBER, 2005, JANUARY,
                                 "\tИнженер по аппаратному и программному тестированию", "" +
                                 "Тестирование, отладка, внедрение ПО цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM)."),
-                        new Organization.Position(DateUtil.of(1997), DateUtil.of(1998),
+                        new Organization.Position(1997, JANUARY, 1998, JANUARY,
                                 "6 месяцев обучения цифровым телефонным сетям (Москва)", ""
                         ))));
     }
 
-    Storage storage;
+    protected Storage storage;
 
-    AbstractStorageTest(Storage storage) {
+    protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
     }
 
     @Before
     public void setUp() throws Exception {
         storage.clear();
-        storage.save(RESUME_1);
-        storage.save(RESUME_2);
-        storage.save(RESUME_3);
+        storage.save(R1);
+        storage.save(R2);
+        storage.save(R3);
     }
 
     @Test
@@ -112,7 +113,7 @@ public abstract class AbstractStorageTest {
     public void update() throws Exception {
         Resume newResume = new Resume(UUID_1, "New Name");
         storage.update(newResume);
-        assertTrue(newResume == storage.get(UUID_1));
+        assertTrue(newResume.equals(storage.get(UUID_1)));
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -124,19 +125,19 @@ public abstract class AbstractStorageTest {
     public void getAllSorted() throws Exception {
         List<Resume> list = storage.getAllSorted();
         assertEquals(3, list.size());
-        assertEquals(list, Arrays.asList(RESUME_1, RESUME_2, RESUME_3));
+        assertEquals(list, Arrays.asList(R1, R2, R3));
     }
 
     @Test
     public void save() throws Exception {
-        storage.save(RESUME_4);
+        storage.save(R4);
         assertSize(4);
-        assertGet(RESUME_4);
+        assertGet(R4);
     }
 
     @Test(expected = ExistStorageException.class)
     public void saveExist() throws Exception {
-        storage.save(RESUME_1);
+        storage.save(R1);
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -153,9 +154,9 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void get() throws Exception {
-        assertGet(RESUME_1);
-        assertGet(RESUME_2);
-        assertGet(RESUME_3);
+        assertGet(R1);
+        assertGet(R2);
+        assertGet(R3);
     }
 
     @Test(expected = NotExistStorageException.class)

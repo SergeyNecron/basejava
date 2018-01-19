@@ -3,6 +3,9 @@ package ru.javawebinar.basejava.model;
 import java.util.Objects;
 
 public class TextSection extends Section {
+
+    private static final long serialVersionUID = 1L;
+
     private final String content;
 
     public TextSection(String content) {
@@ -10,8 +13,12 @@ public class TextSection extends Section {
         this.content = content;
     }
 
-
     public String getContent() {
+        return content;
+    }
+
+    @Override
+    public String toString() {
         return content;
     }
 
@@ -23,16 +30,12 @@ public class TextSection extends Section {
         TextSection that = (TextSection) o;
 
         return content.equals(that.content);
+
     }
 
     @Override
     public int hashCode() {
         return content.hashCode();
     }
-
-
-    @Override
-    public String toString() {
-        return content;
-    }
 }
+

@@ -1,10 +1,10 @@
 package ru.javawebinar.basejava.model;
 
-public abstract class Section {
+import java.io.Serializable;
 
-    public abstract String toString();
-
-    public abstract int hashCode();
-
-    public abstract boolean equals(Object obj);
+/**
+ * gkislin
+ * 19.07.2016
+ */
+abstract public class Section implements Serializable {
 }

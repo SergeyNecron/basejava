@@ -1,5 +1,6 @@
 package ru.javawebinar.basejava.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
@@ -10,7 +11,8 @@ import java.util.Objects;
 import static ru.javawebinar.basejava.util.DateUtil.NOW;
 import static ru.javawebinar.basejava.util.DateUtil.of;
 
-public class Organization {
+public class Organization implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private final Link homePage;
     private List<Position> positions = new ArrayList<>();
@@ -44,7 +46,7 @@ public class Organization {
         return "Organization(" + homePage + "," + positions + ')';
     }
 
-    public static class Position {
+    public static class Position implements Serializable {
         private final String title;
         private final String description;
         private final LocalDate startDate;
@@ -84,6 +86,7 @@ public class Organization {
             return endDate;
         }
 
+
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
@@ -106,4 +109,3 @@ public class Organization {
         }
     }
 }
-
