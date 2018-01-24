@@ -18,6 +18,9 @@ public abstract class AbstractStorageTest {
     protected static final File STORAGE_DIR = new File("/home/op/java/basejava/storage");
 
     private static final Resume R1;
+    private static final Resume R2;
+    private static final Resume R3;
+    private static final Resume R4;
 
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
@@ -82,9 +85,6 @@ public abstract class AbstractStorageTest {
                         ))));
     }
 
-    private static final Resume R2;
-    private static final Resume R3;
-    private static final Resume R4;
 
     protected Storage storage;
 

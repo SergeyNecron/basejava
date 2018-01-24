@@ -1,14 +1,23 @@
 package ru.javawebinar.basejava.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * gkislin
+ * 19.07.2016
+ */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class OrganizationSection extends Section {
-
     private static final long serialVersionUID = 1L;
 
-    private final List<Organization> organizations;
+    private List<Organization> organizations;
+
+    public OrganizationSection() {
+    }
 
     public OrganizationSection(Organization... organizations) {
         this(Arrays.asList(organizations));
@@ -24,11 +33,6 @@ public class OrganizationSection extends Section {
     }
 
     @Override
-    public String toString() {
-        return organizations.toString();
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -36,10 +40,16 @@ public class OrganizationSection extends Section {
         OrganizationSection that = (OrganizationSection) o;
 
         return organizations.equals(that.organizations);
+
     }
 
     @Override
     public int hashCode() {
         return organizations.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return organizations.toString();
     }
 }
