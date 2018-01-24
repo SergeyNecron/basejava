@@ -7,24 +7,22 @@ import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.*;
 
 import java.io.File;
+import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
 
-import static java.time.Month.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public abstract class AbstractStorageTest {
     protected static final File STORAGE_DIR = new File("/home/op/java/basejava/storage");
+
     private static final Resume R1;
 
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
-    private static final Resume R2;
-    private static final Resume R3;
-    private static final Resume R4;
 
     static {
         R1 = new Resume(UUID_1, "Name1");
@@ -64,11 +62,11 @@ public abstract class AbstractStorageTest {
 
         R2.addSection(SectionType.EXPERIENCE, new OrganizationSection(
                 new Organization("Java Online Projects", "http://javaops.ru/",
-                        new Organization.Position(13, OCTOBER, "Практика:" +
+                        new Organization.Position(13, Month.OCTOBER, "Практика:" +
                                 " Разработка Web приложения \"База данных резюме\"", "Объектная модель, коллекции, система ввода-вывода, работа с файлами," +
                                 " сериализация, работа с XML, JSON, SQL, персистентность в базу данных (PostgreSQL), сервлеты, JSP/JSTL, веб-контейнер Tomcat, HTML, " +
                                 "модульные тесты JUnit, java.util.Logging, система контроля версий Git."),
-                        new Organization.Position(13, OCTOBER, "Стажировка Java Enterprise",
+                        new Organization.Position(13, Month.OCTOBER, "Стажировка Java Enterprise",
                                 "Разработка полнофункционального Spring/JPA Enterprise приложения c авторизацией и правами доступа на основе ролей с " +
                                         "использованием наиболее популярных инструментов и технологий Java: Maven, Spring MVC, Security, JPA(Hibernate), REST(Jackson)," +
                                         " Bootstrap (css,js), datatables, jQuery + plugins, Java 8 Stream and Time API."))));
@@ -76,13 +74,17 @@ public abstract class AbstractStorageTest {
 
         R3.addSection(SectionType.EDUCATION, new OrganizationSection(
                 new Organization("Alcatel", "http://www.alcatel.ru/",
-                        new Organization.Position(1997, SEPTEMBER, 2005, JANUARY,
+                        new Organization.Position(1997, Month.SEPTEMBER, 2005, Month.JANUARY,
                                 "\tИнженер по аппаратному и программному тестированию", "" +
                                 "Тестирование, отладка, внедрение ПО цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM)."),
-                        new Organization.Position(1997, JANUARY, 1998, JANUARY,
+                        new Organization.Position(1997, Month.JANUARY, 1998, Month.JANUARY,
                                 "6 месяцев обучения цифровым телефонным сетям (Москва)", ""
                         ))));
     }
+
+    private static final Resume R2;
+    private static final Resume R3;
+    private static final Resume R4;
 
     protected Storage storage;
 
