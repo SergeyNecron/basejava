@@ -1,4 +1,4 @@
-package ru.javawebinar.basejava.storage;
+package ru.javawebinar.basejava;
 
 public class MainUtil {
     public static void main(String[] args) {
@@ -12,4 +12,3 @@ public class MainUtil {
         return null;
     }
 }
-

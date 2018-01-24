@@ -4,6 +4,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+/**
+ * gkislin
+ * 21.07.2016
+ */
 public class MainFile {
     public static void main(String[] args) {
         String filePath = "./.gitignore";
@@ -29,18 +33,18 @@ public class MainFile {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        printDirectoryDeeply(dir, " ");
+        printDirectoryDeeply(dir, "");
     }
 
-    public static void printDirectoryDeeply(File dir, String indentation) {
+    public static void printDirectoryDeeply(File dir, String offset) {
         File[] files = dir.listFiles();
 
         if (files != null) {
             for (File file : files) {
                 if (file.isFile()) {
-                    System.out.println(indentation + "File: " + file.getName());
+                    System.out.println(offset + "File: " + file.getName());
                 } else if (file.isDirectory()) {
-                    System.out.println(indentation + "Directory: " + file.getName());
+                    System.out.println(offset + "Directory: " + file.getName());
                     printDirectoryDeeply(file, "------");
                 }
 
