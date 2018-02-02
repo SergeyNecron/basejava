@@ -64,7 +64,7 @@ public abstract class AbstractStorageTest {
         ));
 
         R2.addSection(SectionType.EXPERIENCE, new OrganizationSection(
-                new Organization("Java Online Projects", "http://javaops.ru/",
+                new Organization("Java Online Projects", null,
                         new Organization.Position(13, Month.OCTOBER, "Практика:" +
                                 " Разработка Web приложения \"База данных резюме\"", "Объектная модель, коллекции, система ввода-вывода, работа с файлами," +
                                 " сериализация, работа с XML, JSON, SQL, персистентность в базу данных (PostgreSQL), сервлеты, JSP/JSTL, веб-контейнер Tomcat, HTML, " +

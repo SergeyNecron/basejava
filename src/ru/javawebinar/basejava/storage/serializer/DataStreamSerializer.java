@@ -1,6 +1,5 @@
 package ru.javawebinar.basejava.storage.serializer;
 
-import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.*;
 
 import java.io.*;
@@ -36,15 +35,10 @@ public class DataStreamSerializer implements StreamSerializer {
                         break;
                     case ACHIEVEMENT:
                     case QUALIFICATIONS: {
-                        List list = ((ListSection) section).getItems();
+                        List<String> list = ((ListSection) section).getItems();
                         dos.writeInt(list.size());
-                        list.forEach(str -> {
-                            try {
-                                dos.writeUTF(String.valueOf(str));
-                            } catch (IOException e) {
-                                throw new StorageException("Error write QUALIFICATIONS ", e);
-                            }
-                        });
+                        for (String str : list)
+                            dos.writeUTF(String.valueOf(str));
                     }
                     break;
                     case EXPERIENCE:
@@ -52,27 +46,18 @@ public class DataStreamSerializer implements StreamSerializer {
                         List<Organization> sectionOrganization = ((OrganizationSection) section).getOrganizations();
                         dos.writeInt(sectionOrganization.size());
                         for (Organization organization : sectionOrganization) {
-                            try {
-                                dos.writeUTF(organization.getHomePage().getName());
-                                dos.writeUTF(organization.getHomePage().getUrl());
-                            } catch (IOException e) {
-                                throw new StorageException("Error write EDUCATION ", e);
-                            }
-
+                            dos.writeUTF(organization.getHomePage().getName());
+                            dos.writeUTF(organization.getHomePage().getUrl());
                             List<Organization.Position> positions = organization.getPositions();
                             dos.writeInt(positions.size());
-                            positions.forEach(position -> {
-                                try {
-                                    dos.writeInt(position.getStartDate().getYear());
-                                    dos.writeInt(position.getStartDate().getMonth().getValue());
-                                    dos.writeInt(position.getEndDate().getYear());
-                                    dos.writeInt(position.getEndDate().getMonth().getValue());
-                                    dos.writeUTF(position.getTitle());
-                                    dos.writeUTF(position.getDescription());
-                                } catch (IOException e) {
-                                    throw new StorageException("Error write EDUCATION ", e);
-                                }
-                            });
+                            for (Organization.Position position : positions) {
+                                dos.writeInt(position.getStartDate().getYear());
+                                dos.writeInt(position.getStartDate().getMonth().getValue());
+                                dos.writeInt(position.getEndDate().getYear());
+                                dos.writeInt(position.getEndDate().getMonth().getValue());
+                                dos.writeUTF(position.getTitle());
+                                dos.writeUTF(position.getDescription());
+                            }
                         }
                         break;
                 }
@@ -125,10 +110,8 @@ public class DataStreamSerializer implements StreamSerializer {
                                 String Description = dis.readUTF();
                                 positions.add(new Organization.Position(StartDateYear, StartDateMonth, EndDateYear, EndDateMonth, Title, Description));
                             }
-
                             listOrganization.add(new Organization(new Link(name, url), positions));
                         }
-
                         resume.addSection(type, new OrganizationSection(listOrganization));
                     }
                 }
