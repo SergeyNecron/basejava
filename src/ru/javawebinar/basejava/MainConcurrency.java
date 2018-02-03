@@ -5,7 +5,8 @@ import java.util.List;
 
 public class MainConcurrency {
     public static final int THREADS_NUMBER = 10000;
-    private static final Object LOCK = new Object();
+    private static final Object LOCK1 = new Object();
+    private static final Object LOCK2 = new Object();
     private int counter;
 
     public static void main(String[] args) throws InterruptedException {
@@ -15,7 +16,7 @@ public class MainConcurrency {
             @Override
             public void run() {
                 System.out.println(getName() + ", " + getState());
-                throw new IllegalStateException();
+//                throw new IllegalStateException();
             }
         };
         thread0.start();
@@ -58,6 +59,30 @@ public class MainConcurrency {
             }
         });
         System.out.println(mainConcurrency.counter);
+
+
+        Thread thread1 = new Thread(() -> {
+            synchronized (LOCK1) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                synchronized (LOCK2) {
+                    System.out.println("thread1");
+                }
+            }
+        });
+
+        Thread thread2 = new Thread(() -> {
+            synchronized (LOCK2) {
+                synchronized (LOCK1) {
+                    System.out.println("thread2");
+                }
+            }
+        });
+        thread1.start();
+        thread2.start();
     }
 
     private synchronized void inc() {
