@@ -18,11 +18,6 @@ public class MainDeadlock {
                     e.printStackTrace();
                 }
                 synchronized (LOCK2) {
-                    try {
-                        Thread.sleep(200);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
                 }
             }
         }).start();
