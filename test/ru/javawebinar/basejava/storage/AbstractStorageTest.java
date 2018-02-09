@@ -17,6 +17,9 @@ import static org.junit.Assert.assertTrue;
 
 public abstract class AbstractStorageTest {
     protected static final File STORAGE_DIR = Config.get().getStorageDir();
+
+    protected Storage storage;
+
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
@@ -83,9 +86,6 @@ public abstract class AbstractStorageTest {
 //                                "6 месяцев обучения цифровым телефонным сетям (Москва)", ""
 //                        ))));
     }
-
-
-    protected Storage storage;
 
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
