@@ -19,10 +19,11 @@ public abstract class AbstractStorageTest {
 
     protected Storage storage;
 
-    private static final String UUID_1 = "uuid1";
-    private static final String UUID_2 = "uuid2";
-    private static final String UUID_3 = "uuid3";
-    private static final String UUID_4 = "uuid4";
+    private static final String UUID_1 = "uuid1                               ";
+    private static final String UUID_2 = "uuid2                               ";
+    private static final String UUID_3 = "uuid3                               ";
+    private static final String UUID_4 = "uuid4                               ";
+
     private static final Resume R1;
     private static final Resume R2;
     private static final Resume R3;
