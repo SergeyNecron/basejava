@@ -1,5 +1,6 @@
 package ru.javawebinar.basejava.storage;
 
+import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 import ru.javawebinar.basejava.sql.GenerikHelper;
@@ -59,9 +60,14 @@ public class SqlStorage implements Storage {
         sqlHelper.<Void>execute("INSERT INTO resume (uuid, full_name) VALUES (?,?)", new GenerikHelper<Void>() {
             @Override
             public Void execute(PreparedStatement ps) throws SQLException {
-                ps.setString(1, r.getUuid());
+                String uuid = r.getUuid();
+                ps.setString(1, uuid);
                 ps.setString(2, r.getFullName());
-                ps.execute();
+                try {
+                    ps.execute();
+                } catch (Exception e) {
+                    throw new ExistStorageException(uuid);
+                }
                 return null;
             }
         });
