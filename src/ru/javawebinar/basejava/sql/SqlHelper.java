@@ -29,6 +29,7 @@ public class SqlHelper {
             return executor.execute(ps);
         } catch (SQLException e) {
             throw (e.getSQLState().equals("23505") ? new ExistStorageException(null) : new StorageException(e));
+            //                   unique_violation  https://www.postgresql.org/docs/8.2/static/errcodes-appendix.html
         }
     }
 
