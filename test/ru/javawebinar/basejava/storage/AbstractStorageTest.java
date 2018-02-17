@@ -5,6 +5,7 @@ import org.junit.Test;
 import ru.javawebinar.basejava.Config;
 import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
+import ru.javawebinar.basejava.model.ContactType;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.io.File;
@@ -37,16 +38,16 @@ public abstract class AbstractStorageTest {
         R3 = new Resume(UUID_3, "Name3");
         R4 = new Resume(UUID_4, "Name4");
 
-//        R1.addContact(ContactType.PHONE, "88005353535");
-//        R2.addContact(ContactType.MOBILE, "84285653535");
-//        R2.addContact(ContactType.HOME_PHONE, "891735532428");
-//        R4.addContact(ContactType.SKYPE, "vasa.ivanov");
-//        R3.addContact(ContactType.EMAIL, "vasa@mail.ru");
-//        R2.addContact(ContactType.LINKEDIN, "профиль LINKEDIN");
-//        R1.addContact(ContactType.GITHUB, "профиль GITHUB");
-//        R3.addContact(ContactType.STATCKOVERFLOW, "профиль StackOverflow");
-//        R4.addContact(ContactType.HABRAHABR, "профиль Habrahabr");
-//        R1.addContact(ContactType.HOME_PHONE, "vasa.ivanov.ru");
+        R1.addContact(ContactType.PHONE, "88005353535");
+        R2.addContact(ContactType.MOBILE, "84285653535");
+        R2.addContact(ContactType.HOME_PHONE, "891735532428");
+        R4.addContact(ContactType.SKYPE, "vasa.ivanov");
+        R3.addContact(ContactType.EMAIL, "vasa@mail.ru");
+        R2.addContact(ContactType.LINKEDIN, "профиль LINKEDIN");
+        R1.addContact(ContactType.GITHUB, "профиль GITHUB");
+        R3.addContact(ContactType.STATCKOVERFLOW, "профиль StackOverflow");
+        R4.addContact(ContactType.HABRAHABR, "профиль Habrahabr");
+        R1.addContact(ContactType.HOME_PHONE, "vasa.ivanov.ru");
 
 //        R2.addSection(SectionType.PERSONAL, new TextSection("Personal data"));
 //        R3.addSection(SectionType.OBJECTIVE, new TextSection("Objective1"));
