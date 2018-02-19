@@ -6,9 +6,7 @@ import ru.javawebinar.basejava.model.Resume;
 import ru.javawebinar.basejava.sql.SqlHelper;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SqlStorage implements Storage {
     public final SqlHelper sqlHelper;
@@ -105,18 +103,29 @@ public class SqlStorage implements Storage {
     }
 
     @Override
-    public List<Resume> getAllSorted() {
+    public List getAllSorted() {
         return sqlHelper.execute("" +
                 "SELECT * FROM resume r " +
                 "    LEFT JOIN contact c" +
                 "           ON r.uuid = c.resume_uuid " +
-                "     ORDER BY full_name", ps -> {
+                "     ORDER BY full_name", (PreparedStatement ps) -> {
             ResultSet rs = ps.executeQuery();
-            List<Resume> resumes = new ArrayList<>();
+            Map<String, Resume> map = new HashMap<>();
             while (rs.next()) {
-                resumes.add(new Resume(rs.getString("uuid"), rs.getString("full_name")));
+                String uuid = rs.getString("uuid");
+                Resume r = map.get(uuid);
+                if (r == null) {
+                    r = new Resume(uuid, rs.getString("full_name"));
+                    map.put(uuid, r);
+                }
+                String value = rs.getString("value");
+                if (value != null) {
+                    r.addContact(ContactType.valueOf(rs.getString("type")), value);
+                }
             }
-            return resumes;
+            List<String> list = new ArrayList(map.values());
+            Collections.sort(list);
+            return list;
         });
     }
 
