@@ -6,7 +6,10 @@ import ru.javawebinar.basejava.model.Resume;
 import ru.javawebinar.basejava.sql.SqlHelper;
 
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SqlStorage implements Storage {
     public final SqlHelper sqlHelper;
@@ -107,7 +110,7 @@ public class SqlStorage implements Storage {
                 "           ON r.uuid = c.resume_uuid " +
                 "     ORDER BY full_name", (PreparedStatement ps) -> {
             ResultSet rs = ps.executeQuery();
-            Map<String, Resume> map = new HashMap<>();
+            Map<String, Resume> map = new LinkedHashMap<>();
             while (rs.next()) {
                 String uuid = rs.getString("uuid");
                 Resume r = map.get(uuid);
@@ -121,7 +124,6 @@ public class SqlStorage implements Storage {
                 }
             }
             List<Resume> list = new ArrayList<>(map.values());
-            Collections.sort(list);
             return list;
         });
     }
