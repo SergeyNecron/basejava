@@ -48,19 +48,16 @@ public class SqlStorage implements Storage {
 
     @Override
     public void update(Resume r) {
-        sqlHelper.transactionalExecute(conn -> {
+        sqlHelper.transactionalExecute((Connection conn) -> {
             try (PreparedStatement ps = conn.prepareStatement("UPDATE resume SET full_name = ? WHERE uuid = ?")) {
                 ps.setString(1, r.getFullName());
                 ps.setString(2, r.getUuid());
-                if (ps.executeUpdate() == 0) {
-                    throw new NotExistStorageException(r.getUuid());
-                }
+                if (ps.executeUpdate() == 0) throw new NotExistStorageException(r.getUuid());
             }
-            sqlHelper.execute("DELETE  FROM contact WHERE resume_uuid=?", ps -> {
+            try (PreparedStatement ps = conn.prepareStatement("DELETE  FROM contact WHERE resume_uuid=?")) {
                 ps.setString(1, r.getUuid());
                 ps.execute();
-                return null;
-            });
+            }
             addContact(r, conn);
             return null;
         });
@@ -103,7 +100,7 @@ public class SqlStorage implements Storage {
     }
 
     @Override
-    public List getAllSorted() {
+    public List<Resume> getAllSorted() {
         return sqlHelper.execute("" +
                 "SELECT * FROM resume r " +
                 "    LEFT JOIN contact c" +
@@ -123,7 +120,7 @@ public class SqlStorage implements Storage {
                     r.addContact(ContactType.valueOf(rs.getString("type")), value);
                 }
             }
-            List<String> list = new ArrayList(map.values());
+            List<Resume> list = new ArrayList<>(map.values());
             Collections.sort(list);
             return list;
         });
