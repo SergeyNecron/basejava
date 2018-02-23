@@ -19,14 +19,10 @@ import static org.junit.Assert.assertTrue;
 
 public abstract class AbstractStorageTest {
     protected static final File STORAGE_DIR = Config.get().getStorageDir();
-
-    protected Storage storage;
-
     private static final String UUID_1 = UUID.randomUUID().toString();
     private static final String UUID_2 = UUID.randomUUID().toString();
     private static final String UUID_3 = UUID.randomUUID().toString();
     private static final String UUID_4 = UUID.randomUUID().toString();
-
     private static final Resume R1;
     private static final Resume R2;
     private static final Resume R3;
@@ -90,6 +86,8 @@ public abstract class AbstractStorageTest {
 //                        ))));
     }
 
+    protected Storage storage;
+
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
     }
@@ -116,9 +114,9 @@ public abstract class AbstractStorageTest {
     @Test
     public void update() throws Exception {
         Resume newResume = new Resume(UUID_1, "New Name");
-        R1.addContact(ContactType.EMAIL, "mail1@google.com");
-        R1.addContact(ContactType.SKYPE, "NewSkype");
-        R1.addContact(ContactType.MOBILE, "+7 921 222-22-22");
+        newResume.addContact(ContactType.EMAIL, "mail1@google.com");
+        newResume.addContact(ContactType.SKYPE, "NewSkype");
+        newResume.addContact(ContactType.MOBILE, "+7 921 222-22-22");
         storage.update(newResume);
         assertTrue(newResume.equals(storage.get(UUID_1)));
     }

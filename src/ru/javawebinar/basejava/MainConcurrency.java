@@ -9,7 +9,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class MainConcurrency {
     public static final int THREADS_NUMBER = 10000;
-    private int counter;
     //    private static final Object LOCK = new Object();
 //    private static final Lock lock = new ReentrantLock();
     private static final ReentrantReadWriteLock reentrantReadWriteLock = new ReentrantReadWriteLock();
@@ -22,6 +21,7 @@ public class MainConcurrency {
         }
     };
     private final AtomicInteger atomicCounter = new AtomicInteger();
+    private int counter;
 
     public static void main(String[] args) throws InterruptedException {
         System.out.println(Thread.currentThread().getName());
