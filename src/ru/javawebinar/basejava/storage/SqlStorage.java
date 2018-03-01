@@ -5,6 +5,7 @@ import ru.javawebinar.basejava.model.ContactType;
 import ru.javawebinar.basejava.model.Resume;
 import ru.javawebinar.basejava.model.Section;
 import ru.javawebinar.basejava.model.SectionType;
+import ru.javawebinar.basejava.sql.ConnectionFactory;
 import ru.javawebinar.basejava.sql.SqlHelper;
 import ru.javawebinar.basejava.util.JsonParser;
 
@@ -18,7 +19,12 @@ public class SqlStorage implements Storage {
     public final SqlHelper sqlHelper;
 
     public SqlStorage(String dbUrl, String dbUser, String dbPassword) {
-        sqlHelper = new SqlHelper(() -> DriverManager.getConnection(dbUrl, dbUser, dbPassword));
+        sqlHelper = new SqlHelper(new ConnectionFactory() {
+            @Override
+            public Connection getConnection() throws SQLException {
+                return DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+            }
+        });
     }
 
     @Override
