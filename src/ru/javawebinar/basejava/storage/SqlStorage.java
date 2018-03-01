@@ -1,19 +1,17 @@
 package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.exception.NotExistStorageException;
-import ru.javawebinar.basejava.model.ContactType;
-import ru.javawebinar.basejava.model.Resume;
-import ru.javawebinar.basejava.model.Section;
-import ru.javawebinar.basejava.model.SectionType;
+import ru.javawebinar.basejava.model.*;
 import ru.javawebinar.basejava.sql.ConnectionFactory;
 import ru.javawebinar.basejava.sql.SqlHelper;
-import ru.javawebinar.basejava.util.JsonParser;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+//import ru.javawebinar.basejava.util.JsonParser;
 
 public class SqlStorage implements Storage {
     public final SqlHelper sqlHelper;
@@ -146,13 +144,6 @@ public class SqlStorage implements Storage {
         });
     }
 
-    private void addSection(ResultSet rs, Resume resume) throws SQLException {
-        String text = rs.getString("content");
-        if (text != null) {
-            resume.addSection(SectionType.valueOf(rs.getString("type")), JsonParser.read(text, Section.class));
-        }
-    }
-
     @Override
     public int size() {
         return sqlHelper.execute("SELECT count(*) FROM resume", st -> {
@@ -178,7 +169,7 @@ public class SqlStorage implements Storage {
             for (Map.Entry<SectionType, Section> e : r.getSections().entrySet()) {
                 ps.setString(1, r.getUuid());
                 ps.setString(2, e.getKey().name());
-                ps.setString(3, JsonParser.write(e.getValue(), Section.class));
+                //    ps.setString(3, JsonParser.write(e.getValue(), Section.class));
                 ps.addBatch();
             }
             ps.executeBatch();
@@ -203,6 +194,31 @@ public class SqlStorage implements Storage {
         String value = rs.getString("value");
         if (value != null) {
             r.addContact(ContactType.valueOf(rs.getString("type")), value);
+        }
+    }
+
+    private void addSection(ResultSet rs, Resume resume) throws SQLException {
+        String text = rs.getString("content");
+        SectionType type = SectionType.valueOf(rs.getString("type"));
+        Section section;
+        switch (type) {
+            case PERSONAL:
+            case OBJECTIVE:
+                section = new TextSection(text.toString());
+                break;
+            case ACHIEVEMENT:
+            case QUALIFICATIONS:
+                ArrayList<String> list = new ArrayList<>();
+                list.add(text.trim());
+                section = new ListSection(list);
+                break;
+            case EXPERIENCE:
+            case EDUCATION:
+            default:
+                throw new IllegalStateException();
+        }
+        if (text != null) {
+            resume.addSection(type, section);
         }
     }
 }

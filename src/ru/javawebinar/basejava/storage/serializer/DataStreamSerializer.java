@@ -84,7 +84,12 @@ public class DataStreamSerializer implements StreamSerializer {
                 return new TextSection(dis.readUTF());
             case ACHIEVEMENT:
             case QUALIFICATIONS:
-                return new ListSection(readList(dis, dis::readUTF));
+                return new ListSection(readList(dis, new ElementReader<String>() {
+                    @Override
+                    public String read() throws IOException {
+                        return dis.readUTF();
+                    }
+                }));
             case EXPERIENCE:
             case EDUCATION:
                 return new OrganizationSection(
