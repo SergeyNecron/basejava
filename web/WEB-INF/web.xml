@@ -11,4 +11,12 @@
         <servlet-name>resumeServlet</servlet-name>
         <url-pattern>/resumes</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>resumeJSServlet</servlet-name>
+        <servlet-class>ru.javawebinar.basejava.web.ResumeJSServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>resumeJSServlet</servlet-name>
+        <url-pattern>/jsresumes</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -2,8 +2,8 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.*;
-import ru.javawebinar.basejava.sql.ConnectionFactory;
 import ru.javawebinar.basejava.sql.SqlHelper;
+import ru.javawebinar.basejava.util.JsonParser;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,17 +11,17 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-//import ru.javawebinar.basejava.util.JsonParser;
-
 public class SqlStorage implements Storage {
-    public final SqlHelper sqlHelper;
+    private final SqlHelper sqlHelper;
 
     public SqlStorage(String dbUrl, String dbUser, String dbPassword) {
-        sqlHelper = new SqlHelper(new ConnectionFactory() {
-            @Override
-            public Connection getConnection() throws SQLException {
-                return DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+        sqlHelper = new SqlHelper(() -> {
+            try {
+                DriverManager.registerDriver(new org.postgresql.Driver());
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
+            return DriverManager.getConnection(dbUrl, dbUser, dbPassword);
         });
     }
 
@@ -169,7 +169,7 @@ public class SqlStorage implements Storage {
             for (Map.Entry<SectionType, Section> e : r.getSections().entrySet()) {
                 ps.setString(1, r.getUuid());
                 ps.setString(2, e.getKey().name());
-                //    ps.setString(3, JsonParser.write(e.getValue(), Section.class));
+                ps.setString(3, JsonParser.write(e.getValue(), Section.class));
                 ps.addBatch();
             }
             ps.executeBatch();
@@ -204,7 +204,7 @@ public class SqlStorage implements Storage {
         switch (type) {
             case PERSONAL:
             case OBJECTIVE:
-                section = new TextSection(text.toString());
+                section = new TextSection(text);
                 break;
             case ACHIEVEMENT:
             case QUALIFICATIONS:
@@ -217,8 +217,6 @@ public class SqlStorage implements Storage {
             default:
                 throw new IllegalStateException();
         }
-        if (text != null) {
             resume.addSection(type, section);
-        }
     }
 }
