@@ -199,24 +199,26 @@ public class SqlStorage implements Storage {
 
     private void addSection(ResultSet rs, Resume resume) throws SQLException {
         String text = rs.getString("content");
+        text = text.substring(79, text.length() - 4);
         SectionType type = SectionType.valueOf(rs.getString("type"));
-        Section section;
         switch (type) {
             case PERSONAL:
             case OBJECTIVE:
-                section = new TextSection(text);
+                resume.addSection(type, new TextSection(text));
                 break;
             case ACHIEVEMENT:
             case QUALIFICATIONS:
-                ArrayList<String> list = new ArrayList<>();
-                list.add(text.trim());
-                section = new ListSection(list);
+                String[] strings = text.split("\",\"");
+                for (int i = 0; i < strings.length; i++) {
+                    strings[i] = strings[i].replaceAll("\\\\", "");
+                }
+                resume.addSection(type, new ListSection(strings));
                 break;
             case EXPERIENCE:
             case EDUCATION:
             default:
                 throw new IllegalStateException();
         }
-            resume.addSection(type, section);
+
     }
 }
