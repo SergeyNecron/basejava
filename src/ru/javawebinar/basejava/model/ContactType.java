@@ -5,7 +5,7 @@ public enum ContactType {
     MOBILE("Мобильный"),
     HOME_PHONE("Домашний тел."),
     SKYPE("Скайп"),
-    EMAIL("Почта"),
+    MAIL("Почта"),
     LINKEDIN("Профиль LinkedIn"),
     GITHUB("Профиль GitHub"),
     STATCKOVERFLOW("Профиль Stackoverflow"),
