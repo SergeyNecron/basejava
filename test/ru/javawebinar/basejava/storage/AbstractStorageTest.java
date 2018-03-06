@@ -48,7 +48,7 @@ public abstract class AbstractStorageTest {
         R3.addSection(SectionType.OBJECTIVE, new TextSection("Objective1"));
 
         R1.addSection(SectionType.ACHIEVEMENT, new ListSection(
-                "С 2013 года: разработка проектов \"Практика Java, разработка Web приложения\",\"Java Enterprise\", \"Многомодульный maven." +
+                "С 2013 года: разработка проектов \"Практика Java, разработка Web приложения\",\"Java Enterprise\",\"Многомодульный maven." +
                         " Многопоточность. XML (JAXB/StAX). Веб сервисы (JAX-RS/SOAP). Удаленное взаимодействие (JMS/AKKA)\" и проведение по ним стажировок" +
                         " и корпоративных обучений. Более 1000 выпускников.",
                 "Реализация двухфакторной аутентификации для онлайн платформы управления проектами Wrike. " +

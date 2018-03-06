@@ -3,7 +3,6 @@ package ru.javawebinar.basejava.storage;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.*;
 import ru.javawebinar.basejava.sql.SqlHelper;
-import ru.javawebinar.basejava.util.JsonParser;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -168,12 +167,44 @@ public class SqlStorage implements Storage {
         try (PreparedStatement ps = conn.prepareStatement("INSERT INTO section (resume_uuid, type, content) VALUES (?,?,?)")) {
             for (Map.Entry<SectionType, Section> e : r.getSections().entrySet()) {
                 ps.setString(1, r.getUuid());
-                ps.setString(2, e.getKey().name());
-                ps.setString(3, JsonParser.write(e.getValue(), Section.class));
+                SectionType type = e.getKey();
+                ps.setString(2, type.name());
+                ps.setString(3, sectionWriter(type, e.getValue()));
+
                 ps.addBatch();
             }
             ps.executeBatch();
         }
+    }
+
+    private String sectionWriter(SectionType type, Section value) {
+        StringBuilder rezult = new StringBuilder().append("{\"CLASSNAME\":\"ru.javawebinar.basejava.model.");
+        switch (type) {
+            case PERSONAL:
+            case OBJECTIVE:
+                rezult.append("TextSection");
+                rezult.append("\",\"INSTANCE\":{\"content\":\"");
+                rezult.append(value);
+                rezult.append("\"}}");
+                break;
+            case ACHIEVEMENT:
+            case QUALIFICATIONS:
+                rezult.append("ListSection");
+                rezult.append("\",\"INSTANCE\":{\"items\":[\"");
+                List listSection = ((ListSection) value).getItems();
+                rezult.append(listSection.get(0));
+                for (int i = 1; i < listSection.size(); i++) {
+                    rezult.append("\", \"");
+                    rezult.append(listSection.get(i));
+                }
+                rezult.append("\"]}}");
+                break;
+            case EXPERIENCE:
+            case EDUCATION:
+            default:
+                throw new IllegalStateException();
+        }
+        return rezult.toString();
     }
 
     private void deleteContacts(Connection conn, Resume r) throws SQLException {
@@ -199,16 +230,18 @@ public class SqlStorage implements Storage {
 
     private void addSection(ResultSet rs, Resume resume) throws SQLException {
         String text = rs.getString("content");
-        text = text.substring(79, text.length() - 4);
+
         SectionType type = SectionType.valueOf(rs.getString("type"));
         switch (type) {
             case PERSONAL:
             case OBJECTIVE:
+                text = text.substring(80, text.length() - 3);
                 resume.addSection(type, new TextSection(text));
                 break;
             case ACHIEVEMENT:
             case QUALIFICATIONS:
-                String[] strings = text.split("\",\"");
+                text = text.substring(79, text.length() - 4);
+                String[] strings = text.split("\", \"");
                 for (int i = 0; i < strings.length; i++) {
                     strings[i] = strings[i].replaceAll("\\\\", "");
                 }
@@ -219,6 +252,5 @@ public class SqlStorage implements Storage {
             default:
                 throw new IllegalStateException();
         }
-
     }
 }
