@@ -16,10 +16,6 @@ public class Config {
     private final File storageDir;
     private final Storage storage;
 
-    public static Config get() {
-        return INSTANCE;
-    }
-
     private Config() {
         try (InputStream is = new FileInputStream(PROPS)) {
             Properties props = new Properties();
@@ -31,12 +27,8 @@ public class Config {
         }
     }
 
-    public File getStorageDir() {
-        return storageDir;
-    }
-
-    public Storage getStorage() {
-        return storage;
+    public static Config get() {
+        return INSTANCE;
     }
 
     private static File getHomeDir() {
@@ -46,5 +38,13 @@ public class Config {
             throw new IllegalStateException(homeDir + " is not directory");
         }
         return homeDir;
+    }
+
+    public File getStorageDir() {
+        return storageDir;
+    }
+
+    public Storage getStorage() {
+        return storage;
     }
 }
