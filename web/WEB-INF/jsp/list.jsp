@@ -18,6 +18,12 @@
             <th></th>
             <th></th>
         </tr>
+        <tr>
+            <td>Новое резюме</td>
+            <td></td>
+            <td></td>
+            <td><a href="resume?action=add"><img src="img/add.png"></a></td>
+        </tr>
         <c:forEach items="${resumes}" var="resume">
             <jsp:useBean id="resume" type="ru.javawebinar.basejava.model.Resume"/>
             <tr>

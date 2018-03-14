@@ -31,5 +31,8 @@ public class MainDate {
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YY/MM/dd");
         System.out.println(dtf.format(ldt));
+        LocalDate d = LocalDate.now();
+        int yearNow = d.getYear();
+        System.out.println(yearNow);
     }
 }
