@@ -20,6 +20,8 @@ import static ru.javawebinar.basejava.util.DateUtil.of;
 public class Organization implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    public static final Organization EMPTY = new Organization("", "", Position.EMPTY);
+
     private Link homePage;
     private List<Position> positions = new ArrayList<>();
 
@@ -33,6 +35,14 @@ public class Organization implements Serializable {
     public Organization(Link homePage, List<Position> positions) {
         this.homePage = homePage;
         this.positions = positions;
+    }
+
+    public Link getHomePage() {
+        return homePage;
+    }
+
+    public List<Position> getPositions() {
+        return positions;
     }
 
     @Override
@@ -54,20 +64,14 @@ public class Organization implements Serializable {
         return "Organization(" + homePage + "," + positions + ')';
     }
 
-    public Link getHomePage() {
-        return homePage;
-    }
-
-    public List<Position> getPositions() {
-        return positions;
-    }
-
     /**
      * gkislin
      * 28.07.2016
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     public static class Position implements Serializable {
+        public static final Position EMPTY = new Position();
+
         @XmlJavaTypeAdapter(LocalDateAdapter.class)
         private LocalDate startDate;
         @XmlJavaTypeAdapter(LocalDateAdapter.class)
