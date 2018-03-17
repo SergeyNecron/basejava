@@ -18,6 +18,44 @@ public class ResumeServlet extends HttpServlet {
 
     private Storage storage; // = Config.get().getStorage();
 
+    private void addSectioms(Resume r, String action) {
+        for (SectionType type : SectionType.values()) {
+            Section section = r.getSection(type);
+            switch (type) {
+                case OBJECTIVE:
+                case PERSONAL:
+                    if (section == null) {
+                        section = new TextSection("");
+                    }
+                    break;
+                case ACHIEVEMENT:
+                case QUALIFICATIONS:
+                    if (section == null) {
+                        section = new ListSection("");
+                    }
+                    break;
+                case EXPERIENCE:
+                case EDUCATION:
+                    OrganizationSection organizationSection = (OrganizationSection) section;
+                    List<Organization> organizations = new ArrayList<>();
+                    if (action.equals("addEXPERIENCE") && type.equals(SectionType.EXPERIENCE) || action.equals("addEDUCATION") && type.equals(SectionType.EDUCATION))
+                        organizations.add(new Organization("", "", new Organization.Position()));
+                    if (organizationSection != null) {
+                        for (Organization organization : organizationSection.getOrganizations()) {
+                            List<Organization.Position> positions = new ArrayList<>();
+                            if (action.equals("addPositionEXPERIENCE") && type.equals(SectionType.EXPERIENCE) || action.equals("addPositionEDUCATION") && type.equals(SectionType.EDUCATION))
+                                positions.add(new Organization.Position());
+                            positions.addAll(organization.getPositions());
+                            organizations.add(new Organization(organization.getHomePage(), positions));
+                        }
+                    }
+                    section = new OrganizationSection(organizations);
+                    break;
+            }
+            r.addSection(type, section);
+        }
+    }
+
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
@@ -90,7 +128,22 @@ public class ResumeServlet extends HttpServlet {
             storage.save(r);
         else
             storage.update(r);
-        response.sendRedirect("resume");
+
+        String action = request.getParameter("action");
+        if (!(action == null)) {
+//            request.setAttribute("action", action);
+//            request.setAttribute("uuid", uuid);
+            if (action.equals("addEXPERIENCE") || action.equals("addEDUCATION") || action.equals("addPositionEXPERIENCE") || action.equals("addPositionEDUCATION")) {
+                addSectioms(r, action);
+                request.setAttribute("resume", r);
+                request.getRequestDispatcher("/WEB-INF/jsp/edit.jsp").forward(request, response);
+            }
+
+        } else response.sendRedirect("resume");
+        // request.getRequestDispatcher("resume").forward(request, response);
+
+        //
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
@@ -124,41 +177,7 @@ public class ResumeServlet extends HttpServlet {
             case "addEDUCATION":
             case "addPosition":
                 r = storage.get(uuid);
-                for (SectionType type : SectionType.values()) {
-                    Section section = r.getSection(type);
-                    switch (type) {
-                        case OBJECTIVE:
-                        case PERSONAL:
-                            if (section == null) {
-                                section = new TextSection("");
-                            }
-                            break;
-                        case ACHIEVEMENT:
-                        case QUALIFICATIONS:
-                            if (section == null) {
-                                section = new ListSection("");
-                            }
-                            break;
-                        case EXPERIENCE:
-                        case EDUCATION:
-                            OrganizationSection organizationSection = (OrganizationSection) section;
-                            List<Organization> organizations = new ArrayList<>();
-                            if (action.equals("addEXPERIENCE") && type.equals(SectionType.EXPERIENCE) || action.equals("addEDUCATION") && type.equals(SectionType.EDUCATION))
-                                organizations.add(new Organization("", "", new Organization.Position()));
-                            if (organizationSection != null) {
-                                for (Organization organization : organizationSection.getOrganizations()) {
-                                    List<Organization.Position> positions = new ArrayList<>();
-                                    if (action.equals("addPosition"))
-                                        positions.add(new Organization.Position());
-                                    positions.addAll(organization.getPositions());
-                                    organizations.add(new Organization(organization.getHomePage(), positions));
-                                }
-                            }
-                            section = new OrganizationSection(organizations);
-                            break;
-                    }
-                    r.addSection(type, section);
-                }
+                addSectioms(r, action);
                 break;
             default:
                 throw new IllegalArgumentException("Action " + action + " is illegal");

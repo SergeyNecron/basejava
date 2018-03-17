@@ -43,15 +43,17 @@
                 </c:when>
                 <c:when test="${type=='EXPERIENCE' || type=='EDUCATION'}">
                     <c:if test="${type=='EXPERIENCE'}">
-                        <br><a href="resume?uuid=${resume.uuid}&action=addEXPERIENCE">Добавить организацию</a><br>
-                        <button type="submit" name="action" value="addEXPERIENCE">Сохранить организацию</button>
-                        <br><br>
+                        <button type="submit" name="action" value="addEXPERIENCE">Добавить организацию</button>
+                        <button type="submit" name="action" value="addPositionEXPERIENCE">Добавить должность</button>
+                        <br>
                     </c:if>
+
                     <c:if test="${type=='EDUCATION'}">
-                        <br><a href="resume?uuid=${resume.uuid}&action=addEDUCATION">Добавить организацию</a><br>
-                        <button type="submit" name="action" value="addEDUCATION">Сохранить организацию</button>
+                        <button type="submit" name="action" value="addEDUCATION">Добавить организацию</button>
+                        <button type="submit" name="action" value="addPositionEDUCATION">Добавить должность</button>
                         <br><br>
                     </c:if>
+
                     <c:forEach var="organizations" items="<%=((OrganizationSection) section).getOrganizations()%>"
                                varStatus="counter">
                         <dl>
@@ -64,11 +66,6 @@
                             </dd>
                             </dd>
                         </dl>
-                        <br>
-                        <a href="resume?uuid=${resume.uuid}&action=addPosition">Добавить должность</a>
-                        <br>
-                        <button type="submit" name="action" value="addPosition">Сохранить должность</button>
-                        <br><br>
 
                         <div style="margin-left: 40px">
                             <c:forEach var="positions" items="${organizations.positions}">
@@ -100,15 +97,13 @@
                                 </dl>
                             </c:forEach>
                         </div>
-
-
                     </c:forEach>
                 </c:when>
             </c:choose>
         </c:forEach>
         <button type="submit">Сохранить</button>
-        <button onclick="window.history.back()">Отменить</button>
     </form>
+    <button onclick="window.history.back()">Отменить</button>
 </section>
 <jsp:include page="fragments/footer.jsp"/>
 </body>
